@@ -44,7 +44,7 @@ blur_params = (4, 4)
 dilation_params = (5, 5)
 movment_threshold = 80
 
-print("START switch_pin ON for pre-video test")
+print("START")
 
 # start capturing
 cv2.namedWindow("Raspberry Potter")
@@ -92,6 +92,7 @@ def IsGesture(a, b, c, d, i):
     print(astr)
 
 def FindWand():
+    print("Finding wand")
     global rval, old_frame, old_gray, p0, mask, color, ig, img, frame
     try:
         rval, old_frame = cam.read()
@@ -118,6 +119,7 @@ def FindWand():
         exit
 
 def TrackWand():
+    print("Tracking wand")
     global rval, old_frame, old_gray, p0, mask, color, ig, img, frame
     try:
         color = (0, 0, 255)
@@ -197,7 +199,6 @@ def TrackWand():
 
 try:
     FindWand()
-    print("START incendio_pin ON and set switch off if video is running")
     TrackWand()
 except:
     print("Startup Error: ", sys.exc_info()[0])
