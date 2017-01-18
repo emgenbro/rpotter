@@ -4,7 +4,7 @@
 
 apt-get -y purge wolfram-engine
 apt-get update
-apt-get upgrade
+apt-get -y upgrade
 apt-get -y install build-essential cmake pkg-config
 apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 apt-get -y install libxvidcore-dev libx264-dev
