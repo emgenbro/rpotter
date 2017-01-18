@@ -34,8 +34,6 @@ warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 GPIOS = 32
 MODES = ["INPUT", "OUTPUT", "ALT5", "ALT4", "ALT0", "ALT1", "ALT2", "ALT3"]
 
-pi = pigpio.pi()
-
 print("Initializing point tracking")
 
 # Parameters
