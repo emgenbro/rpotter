@@ -1,16 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash -e
 
 # gotten from http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
 
 apt-get purge wolfram-engine
 apt-get update
 apt-get upgrade
-apt-get install build-essential cmake pkg-config
-apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
-apt-get install libxvidcore-dev libx264-dev
-apt-get install libgtk2.0-dev
-apt-get install libatlas-base-dev gfortran
-apt-get install python2.7-dev python3-dev
+apt-get -y install build-essential cmake pkg-config
+apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+apt-get -y install libxvidcore-dev libx264-dev
+apt-get -y install libgtk2.0-dev
+apt-get -y install libatlas-base-dev gfortran
+apt-get -y install python2.7-dev python3-dev
 
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip
 unzip opencv.zip
