@@ -45,9 +45,6 @@ dilation_params = (5, 5)
 movment_threshold = 80
 
 print("START switch_pin ON for pre-video test")
-pi.write(nox_pin, 0)
-pi.write(incendio_pin, 0)
-pi.write(switch_pin, 1)
 
 # start capturing
 cv2.namedWindow("Raspberry Potter")
