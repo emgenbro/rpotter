@@ -27,7 +27,6 @@ import threading
 import sys
 import math
 import time
-import pigpio
 import warnings
 
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
@@ -36,24 +35,6 @@ GPIOS = 32
 MODES = ["INPUT", "OUTPUT", "ALT5", "ALT4", "ALT0", "ALT1", "ALT2", "ALT3"]
 
 pi = pigpio.pi()
-
-# NOTE pins use BCM numbering in code.  I reference BOARD numbers in my articles - sorry for the confusion!
-
-# pin for Powerswitch (Lumos,Nox)
-switch_pin = 23
-pi.set_mode(switch_pin, pigpio.OUTPUT)
-
-# pin for Particle (Nox)
-nox_pin = 24
-pi.set_mode(nox_pin, pigpio.OUTPUT)
-
-# pin for Particle (Incendio)
-incendio_pin = 22
-pi.set_mode(incendio_pin, pigpio.OUTPUT)
-
-# pin for Trinket (Colovario)
-trinket_pin = 12
-pi.set_mode(trinket_pin, pigpio.OUTPUT)
 
 print("Initializing point tracking")
 
@@ -76,40 +57,21 @@ cam = cv2.VideoCapture(-1)
 cam.set(3, 640)
 cam.set(4, 480)
 
-
 def Spell(spell):
     # clear all checks
     ig = [[0] for x in range(15)]
     # Invoke IoT (or any other) actions here
     cv2.putText(mask, spell, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
     if (spell == "Colovaria"):
-        print("trinket_pin trigger")
-        pi.write(trinket_pin, 0)
+        print("Colovaria")
         time.sleep(1)
-        pi.write(trinket_pin, 1)
     elif (spell == "Incendio"):
-        print("switch_pin OFF")
-        pi.write(switch_pin, 0)
-        print("nox_pin OFF")
-        pi.write(nox_pin, 0)
-        print("incendio_pin ON")
-        pi.write(incendio_pin, 1)
+        print("Incendio")
     elif (spell == "Lumos"):
-        print("switch_pin ON")
-        pi.write(switch_pin, 1)
-        print("nox_pin OFF")
-        pi.write(nox_pin, 0)
-        print("incendio_pin OFF")
-        pi.write(incendio_pin, 0)
+        print("Lumos")
     elif (spell == "Nox"):
-        print("switch_pin OFF")
-        pi.write(switch_pin, 0)
-        print("nox_pin ON")
-        pi.write(nox_pin, 1)
-        print("incendio_pin OFF")
-        pi.write(incendio_pin, 0)
+        print("Nox")
     print("CAST: %s" % spell)
-
 
 def IsGesture(a, b, c, d, i):
     print("point: %s" % i)
@@ -133,7 +95,6 @@ def IsGesture(a, b, c, d, i):
     elif "leftup" in astr:
         Spell("Incendio")
     print(astr)
-
 
 def FindWand():
     global rval, old_frame, old_gray, p0, mask, color, ig, img, frame
@@ -160,7 +121,6 @@ def FindWand():
         e = sys.exc_info()[1]
         print("Error: %s" % e)
         exit
-
 
 def TrackWand():
     global rval, old_frame, old_gray, p0, mask, color, ig, img, frame
@@ -241,12 +201,9 @@ def TrackWand():
             cam.release()
             break
 
-
 try:
     FindWand()
     print("START incendio_pin ON and set switch off if video is running")
-    pi.write(incendio_pin, 1)
-    pi.write(switch_pin, 0)
     TrackWand()
 finally:
     cv2.destroyAllWindows()
