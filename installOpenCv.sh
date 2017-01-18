@@ -2,7 +2,7 @@
 
 # gotten from http://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/
 
-apt-get purge wolfram-engine
+apt-get -y purge wolfram-engine
 apt-get update
 apt-get upgrade
 apt-get -y install build-essential cmake pkg-config
