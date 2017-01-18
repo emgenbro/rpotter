@@ -55,7 +55,7 @@ pi.set_mode(incendio_pin, pigpio.OUTPUT)
 trinket_pin = 12
 pi.set_mode(trinket_pin, pigpio.OUTPUT)
 
-print "Initializing point tracking"
+print("Initializing point tracking")
 
 # Parameters
 lk_params = dict(winSize=(15, 15),
@@ -65,7 +65,7 @@ blur_params = (4, 4)
 dilation_params = (5, 5)
 movment_threshold = 80
 
-print "START switch_pin ON for pre-video test"
+print("START switch_pin ON for pre-video test")
 pi.write(nox_pin, 0)
 pi.write(incendio_pin, 0)
 pi.write(switch_pin, 1)
@@ -83,36 +83,36 @@ def Spell(spell):
     # Invoke IoT (or any other) actions here
     cv2.putText(mask, spell, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
     if (spell == "Colovaria"):
-        print "trinket_pin trigger"
+        print("trinket_pin trigger")
         pi.write(trinket_pin, 0)
         time.sleep(1)
         pi.write(trinket_pin, 1)
     elif (spell == "Incendio"):
-        print "switch_pin OFF"
+        print("switch_pin OFF")
         pi.write(switch_pin, 0)
-        print "nox_pin OFF"
+        print("nox_pin OFF")
         pi.write(nox_pin, 0)
-        print "incendio_pin ON"
+        print("incendio_pin ON")
         pi.write(incendio_pin, 1)
     elif (spell == "Lumos"):
-        print "switch_pin ON"
+        print("switch_pin ON")
         pi.write(switch_pin, 1)
-        print "nox_pin OFF"
+        print("nox_pin OFF")
         pi.write(nox_pin, 0)
-        print "incendio_pin OFF"
+        print("incendio_pin OFF")
         pi.write(incendio_pin, 0)
     elif (spell == "Nox"):
-        print "switch_pin OFF"
+        print("switch_pin OFF")
         pi.write(switch_pin, 0)
-        print "nox_pin ON"
+        print("nox_pin ON")
         pi.write(nox_pin, 1)
-        print "incendio_pin OFF"
+        print("incendio_pin OFF")
         pi.write(incendio_pin, 0)
-    print "CAST: %s" % spell
+    print("CAST: %s" % spell)
 
 
 def IsGesture(a, b, c, d, i):
-    print "point: %s" % i
+    print("point: %s" % i)
     # look for basic movements - TODO: trained gestures
     if ((a < (c - 5)) & (abs(b - d) < 2)):
         ig[i].append("left")
@@ -132,7 +132,7 @@ def IsGesture(a, b, c, d, i):
         Spell("Colovaria")
     elif "leftup" in astr:
         Spell("Incendio")
-    print astr
+    print(astr)
 
 
 def FindWand():
@@ -154,11 +154,11 @@ def FindWand():
             p0 = p0[:, :, 0:2]
             mask = np.zeros_like(old_frame)
             ig = [[0] for x in range(20)]
-        print "finding..."
+        print("finding...")
         threading.Timer(3, FindWand).start()
     except:
         e = sys.exc_info()[1]
-        print "Error: %s" % e
+        print("Error: %s" % e)
         exit
 
 
@@ -183,7 +183,7 @@ def TrackWand():
             p0 = p0[:, :, 0:2]
             mask = np.zeros_like(old_frame)
     except:
-        print "No points found"
+        print("No points found")
         # Create a mask image for drawing purposes
 
     while True:
@@ -231,10 +231,10 @@ def TrackWand():
             old_gray = frame_gray.copy()
             p0 = good_new.reshape(-1, 1, 2)
         except IndexError:
-            print "Index error - Tracking"
+            print("Index error - Tracking")
         except:
             e = sys.exc_info()[0]
-            print "Tracking Error: %s" % e
+            print("Tracking Error: %s" % e)
         key = cv2.waitKey(20)
         if key in [27, ord('Q'), ord('q')]:  # exit on ESC
             cv2.destroyAllWindows()
@@ -244,7 +244,7 @@ def TrackWand():
 
 try:
     FindWand()
-    print "START incendio_pin ON and set switch off if video is running"
+    print("START incendio_pin ON and set switch off if video is running")
     pi.write(incendio_pin, 1)
     pi.write(switch_pin, 0)
     TrackWand()
