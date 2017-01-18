@@ -188,8 +188,7 @@ def TrackWand():
         except IndexError:
             print("Index error - Tracking")
         except:
-            e = sys.exc_info()[0]
-            print("Tracking Error: %s" % e)
+            print("Tracking Error: ", sys.exc_info()[0])
         key = cv2.waitKey(20)
         if key in [27, ord('Q'), ord('q')]:  # exit on ESC
             cv2.destroyAllWindows()
@@ -200,6 +199,8 @@ try:
     FindWand()
     print("START incendio_pin ON and set switch off if video is running")
     TrackWand()
+except:
+    print("Startup Error: ", sys.exc_info()[0])
 finally:
     cv2.destroyAllWindows()
     cam.release()
