@@ -12,6 +12,7 @@ apt-get -y install libgtk2.0-dev
 apt-get -y install libatlas-base-dev gfortran
 apt-get -y install python2.7-dev python3-dev
 
+cd ~
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.2.0.zip
 unzip opencv.zip
 wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.2.0.zip
