@@ -6,6 +6,7 @@ sudo apt-get -y purge wolfram-engine
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get -y install build-essential cmake pkg-config
+sudo apt-get -y install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
 sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get -y install libxvidcore-dev libx264-dev
 sudo apt-get -y install libgtk2.0-dev
@@ -55,3 +56,6 @@ ln -s /usr/local/lib/python3.4/site-packages/cv2.so cv2.so
 
 cd ~
 # rm -rf opencv-3.2.0 opencv_contrib-3.2.0
+
+# enable the picamera for cv2
+sudo modprobe bcm2835-v4l2
