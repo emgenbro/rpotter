@@ -48,8 +48,6 @@ make -j4
 sudo make install
 sudo ldconfig
 
-ls -l /usr/local/lib/python3.4/site-packages/
-
 cd /usr/local/lib/python3.4/site-packages/
 sudo mv cv2.cpython-34m.so cv2.so
 cd ~/.virtualenvs/cv/lib/python3.4/site-packages/
