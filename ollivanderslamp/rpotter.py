@@ -42,15 +42,13 @@ blur_params = (4, 4)
 dilation_params = (5, 5)
 movment_threshold = 80
 
-print("START")
-
-# start capturing
+print("Camera setup")
 cv2.namedWindow("Raspberry Potter")
 cam = cv2.VideoCapture(-1)
 cam.set(3, 640)
 cam.set(4, 480)
 
-# Unicorn PHAT setup
+print("Unicorn setup")
 unicorn.set_layout(unicorn.AUTO)
 unicorn.rotation(0)
 unicorn.brightness(0.5)
