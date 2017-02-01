@@ -17,17 +17,15 @@ Copyright (c) 2016 Sean O'Brien.  Permission is hereby granted, free of charge, 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 '''
-import io
-import numpy as np
-import argparse
 import cv2
-from cv2 import *
-import picamera
-import threading
-import sys
 import math
+import numpy as np
+import sys
+import threading
 import time
+import unicornhat as unicorn
 import warnings
+from cv2 import *
 
 warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 
@@ -52,6 +50,12 @@ cam = cv2.VideoCapture(-1)
 cam.set(3, 640)
 cam.set(4, 480)
 
+# Unicorn PHAT setup
+unicorn.set_layout(unicorn.AUTO)
+unicorn.rotation(0)
+unicorn.brightness(0.5)
+width, height = unicorn.get_shape()
+
 def Spell(spell):
     # clear all checks
     ig = [[0] for x in range(15)]
@@ -59,14 +63,24 @@ def Spell(spell):
     cv2.putText(mask, spell, (5, 25), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 0, 0))
     if (spell == "Colovaria"):
         print("Colovaria")
-        time.sleep(1)
+        setUnicornColor(255, 0, 255)
     elif (spell == "Incendio"):
         print("Incendio")
+        setUnicornColor(0, 255, 0)
     elif (spell == "Lumos"):
         print("Lumos")
+        setUnicornColor(255, 0, 0)
     elif (spell == "Nox"):
         print("Nox")
+        setUnicornColor(0, 0, 255)
     print("CAST: %s" % spell)
+
+def setUnicornColor(r, g, b):
+    for y in range(height):
+        for x in range(width):
+            unicorn.set_pixel(x, y, r, g, b)
+            unicorn.show()
+            time.sleep(0.05)
 
 def IsGesture(a, b, c, d, i):
     print("point: %s" % i)
