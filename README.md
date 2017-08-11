@@ -1,4 +1,4 @@
-# Raspberry Potter
+# Raspberry Potter (Test)
 Use a wand to control the IoT (Internet of Things)
 
 You'll need:
